@@ -6,12 +6,15 @@ import br.edu.ulbra.election.election.model.Election;
 import br.edu.ulbra.election.election.output.v1.ElectionOutput;
 import br.edu.ulbra.election.election.output.v1.GenericOutput;
 import br.edu.ulbra.election.election.repository.ElectionRepository;
+import org.apache.commons.lang.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.modelmapper.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -24,7 +27,7 @@ public class ElectionService {
 
     private static final String MESSAGE_INVALID_ID = "Invalid id";
     private static final String MESSAGE_VOTER_NOT_FOUND = "Voter not found";
-
+    private static final String STATES[]={"BR","AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"};
     @Autowired
     public ElectionService(ElectionRepository electionRepository, ModelMapper modelMapper) {
         this.electionRepository = electionRepository;
@@ -54,11 +57,13 @@ public class ElectionService {
     }
 
     public ElectionOutput create(ElectionInput electionInput){
+        validateInput(electionInput);
         electionRepository.save(modelMapper.map(electionInput, Election.class));
         return modelMapper.map(electionInput,ElectionOutput.class);
     }
 
     public ElectionOutput update(Long electionId, ElectionInput electionInput){
+        validateInput(electionInput);
         if (electionId == null){
             throw new GenericOutputException(MESSAGE_INVALID_ID);
         }
@@ -89,5 +94,25 @@ public class ElectionService {
         electionRepository.delete(election);
 
         return new GenericOutput("Deleted");
+    }
+
+    private void validateInput(ElectionInput electionInput){
+        List<String> state = new ArrayList<>();
+        if(!StringUtils.isBlank(electionInput.getStateCode())){
+            throw new GenericOutputException("Error");
+        }
+        if(!StringUtils.isBlank(electionInput.getDescription())){
+            throw new GenericOutputException("Error");
+        }
+        if(electionInput.getYear() == null){
+            throw new GenericOutputException("Error");
+        }
+        if(electionInput.getYear() >  1999 && electionInput.getYear() < 2200){
+            throw new GenericOutputException("Error");
+        }
+        List<String> listStates = Arrays.asList(STATES);
+        if(listStates.contains(electionInput.getStateCode())){
+            throw new GenericOutputException("Error");
+        }
     }
 }
