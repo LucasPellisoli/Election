@@ -18,6 +18,12 @@ public class Vote {
     @Column
     private Long candidateId;
 
+    @Column
+    private  boolean blankVote;
+
+    @Column
+    private  boolean NullVote;
+
     public Long getId() {
         return id;
     }
@@ -48,5 +54,21 @@ public class Vote {
 
     public void setCandidateId(Long candidateId) {
         this.candidateId = candidateId;
+    }
+
+    public boolean isBlankVote() {
+        return blankVote;
+    }
+
+    public void setBlankVote(boolean blankVote) {
+        this.blankVote = blankVote;
+    }
+
+    public boolean isNullVote() {
+        return NullVote;
+    }
+
+    public void setNullVote(boolean nullVote) {
+        NullVote = nullVote;
     }
 }

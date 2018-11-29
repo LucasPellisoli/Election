@@ -97,22 +97,21 @@ public class ElectionService {
     }
 
     private void validateInput(ElectionInput electionInput){
-        List<String> state = new ArrayList<>();
-        if(!StringUtils.isBlank(electionInput.getStateCode())){
+        if(StringUtils.isBlank(electionInput.getStateCode())){
             throw new GenericOutputException("Error");
         }
-        if(!StringUtils.isBlank(electionInput.getDescription())){
+        if(StringUtils.isBlank(electionInput.getDescription())){
             throw new GenericOutputException("Error");
         }
         if(electionInput.getYear() == null){
             throw new GenericOutputException("Error");
         }
-        if(electionInput.getYear() >  1999 && electionInput.getYear() < 2200){
-            throw new GenericOutputException("Error");
+        if(electionInput.getYear() <= 1999 && electionInput.getYear() >= 2200){
+            throw new GenericOutputException("Year");
         }
         List<String> listStates = Arrays.asList(STATES);
-        if(listStates.contains(electionInput.getStateCode())){
-            throw new GenericOutputException("Error");
+        if(!listStates.contains(electionInput.getStateCode())){
+            throw new GenericOutputException("State not found");
         }
     }
 }
