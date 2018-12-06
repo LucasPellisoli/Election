@@ -41,14 +41,14 @@ public class ElectionApi {
         return this.electionService.getById(electionId);
     }
 
-    @PutMapping("/")
+    @PostMapping("/")
     @ApiOperation(value = "Create new election")
     public ElectionOutput create(@RequestBody ElectionInput electionInput){
         return this.electionService.create(electionInput);
 
     }
 
-    @PostMapping("/{electionId}")
+    @PutMapping("/{electionId}")
     @ApiOperation(value = "Update election")
     public ElectionOutput update(@PathVariable Long electionId, @RequestBody ElectionInput electionInput){
         return this.electionService.update(electionId,electionInput);

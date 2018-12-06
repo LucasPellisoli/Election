@@ -23,7 +23,7 @@ public class CandidateClienteService {
         return this.candidateClient.getById(id);
     }
 
-    @FeignClient(value="party-service", url="${url.candidate-service}")
+    @FeignClient(value="candidate-service", url="${url.candidate-service}")
     private interface CandidateClient {
 
         @GetMapping("/v1/candidate/{candidateId}")

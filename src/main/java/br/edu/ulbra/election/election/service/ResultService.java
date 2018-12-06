@@ -79,10 +79,4 @@ public class ResultService {
         return result;
     }
 
-
-
-    private void validateInput(VoteInput voteInput){
-
-    }
-
 }

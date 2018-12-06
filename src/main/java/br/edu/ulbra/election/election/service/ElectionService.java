@@ -98,16 +98,16 @@ public class ElectionService {
 
     private void validateInput(ElectionInput electionInput){
         if(StringUtils.isBlank(electionInput.getStateCode())){
-            throw new GenericOutputException("Error");
+            throw new GenericOutputException("State is required!");
         }
         if(StringUtils.isBlank(electionInput.getDescription())){
-            throw new GenericOutputException("Error");
+            throw new GenericOutputException("Description is required!");
         }
         if(electionInput.getYear() == null){
-            throw new GenericOutputException("Error");
+            throw new GenericOutputException("Year is required!");
         }
         if(electionInput.getYear() <= 1999 && electionInput.getYear() >= 2200){
-            throw new GenericOutputException("Year");
+            throw new GenericOutputException("Invalid year range,, must be between 1999 and 2200");
         }
         List<String> listStates = Arrays.asList(STATES);
         if(!listStates.contains(electionInput.getStateCode())){
